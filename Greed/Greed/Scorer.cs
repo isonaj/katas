@@ -9,31 +9,38 @@ namespace Greed
     {
         public int Score(int[] dice)
         {
-            var available = new List<int>(dice);
             var score = 0;
-            score += ScoreTriples(available);
-            score += ScoreOnes(available);
-            score += ScoreFives(available);
+            score += ScoreTriples(dice);
+            score += ScoreOnes(dice);
+            score += ScoreFives(dice);
 
             return score;
         }
-        private int ScoreOnes(List<int> dice)
+        private int ScoreOnes(int[] dice)
         {
-            return 100 * dice.Where(d => d == 1).Count();
+            var score = 0;
+            var count = dice.Where(d => d == 1).Count();
+            if (count >= 3)
+                score += 1000;
+            score += count % 3 * 100;
+            return score;
         }
 
-        private int ScoreFives(List<int> dice)
+        private int ScoreFives(int[] dice)
         {
-            return 50 * dice.Where(d => d == 5).Count();
+            var score = 0;
+            var count = dice.Where(d => d == 5).Count();
+            if (count >= 3)
+                score += 500;
+            score += count % 3 * 50;
+            return score;
         }
 
-        private int ScoreTriples(List<int> dice)
+        private int ScoreTriples(int[] dice)
         {
-            if (dice.Where(d => d == 1).Count() >= 3) return 1000;
             if (dice.Where(d => d == 2).Count() >= 3) return 200;
             if (dice.Where(d => d == 3).Count() >= 3) return 300;
             if (dice.Where(d => d == 4).Count() >= 3) return 400;
-            if (dice.Where(d => d == 5).Count() >= 3) return 500;
             if (dice.Where(d => d == 6).Count() >= 3) return 600;
             return 0;
         }

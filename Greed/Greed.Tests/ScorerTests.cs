@@ -59,5 +59,17 @@ namespace Tests
 
             Assert.AreEqual(score, actual);
         }
+
+        [Test]
+        [TestCase(new int[5] { 1, 1, 1, 5, 1 }, 1150)]
+        [TestCase(new int[5] { 2, 3, 4, 6, 2 }, 0)]
+        [TestCase(new int[5] { 3, 4, 5, 3, 3 }, 350)]
+        public void TestExamples(int[] dice, int score)
+        {
+            var scorer = new Scorer();
+            var actual = scorer.Score(dice);
+
+            Assert.AreEqual(score, actual);
+        }
     }
 }
